@@ -10,7 +10,7 @@
     <iframe 
   </body>
 </html>
--->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,3 +31,76 @@
     <iframe id="browser" src="https://www.example.com" title="Simple iframe Browser" width="100%" height="500px" frameborder="0" sandbox="allow-same-origin allow-scripts"></iframe>
 </body>
 </html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Browser</title>
+    <style>
+        #url-bar {
+            width: 100%;
+            height: 30px;
+            font-size: 16px;
+            padding: 5px;
+        }
+        #browser {
+            width: 100%;
+            height: 500px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <input id="url-bar" type="text" value="https://www.example.com" />
+    <button onclick="loadUrl()">Go</button>
+    <button onclick="goBack()">Back</button>
+    <button onclick="goForward()">Forward</button>
+    <button onclick="showHistory()">History</button>
+    <iframe id="browser" src="https://www.example.com" title="Simple Browser"></iframe>
+
+    <script>
+        let url = "https://www.example.com";
+        let history = [url];
+        let currentIndex = 0;
+
+        function loadUrl() {
+            let inputUrl = document.getElementById("url-bar").value;
+            if (inputUrl !== url) {
+                url = inputUrl;
+                history.splice(currentIndex + 1);
+                history.push(url);
+                currentIndex++;
+            }
+            document.getElementById("browser").src = url;
+        }
+
+        function goBack() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                url = history[currentIndex];
+                document.getElementById("browser").src = url;
+            }
+        }
+
+        function goForward() {
+            if (currentIndex < history.length - 1) {
+                currentIndex++;
+                url = history[currentIndex];
+                document.getElementById("browser").src = url;
+            }
+        }
+
+        function showHistory() {
+            console.log(history);
+        }
+
+        // 每 5 秒刷新一次 iframe
+        //setInterval(() => {
+        //    loadUrl();
+        //}, 5000);
+    </script>
+</body>
+</html>
+
